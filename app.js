@@ -9,6 +9,7 @@ const App = {
     currentRoute: 'dashboard',
     theme: localStorage.getItem('theme') || 'dark',
     progresso: [],
+    deferredPrompt: null,
 
     async init() {
         this.applyTheme();
@@ -128,6 +129,18 @@ const App = {
             alert('❌ Erro ao copiar. Por favor, tente manualmente.');
         }
         document.body.removeChild(textArea);
+        document.body.removeChild(textArea);
+    },
+
+    async instalarApp() {
+        if (!this.deferredPrompt) return;
+        this.deferredPrompt.prompt();
+        const { outcome } = await this.deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            console.log('Usuário aceitou a instalação');
+            this.deferredPrompt = null;
+            UI.renderLogin(); // Esconder botão
+        }
     },
 
     toggleTheme() {
@@ -278,6 +291,13 @@ const UI = {
                     <i class="material-icons-round">school</i>
                     <span class="text-sm">Colégio Brasil • ${App.prefs ? App.prefs.ano_vigente : '...'}</span>
                 </div>
+
+                ${App.deferredPrompt ? `
+                    <button class="btn-primary mt-8" style="background: rgba(255,255,255,0.05); color: var(--app-text); border: 1px solid var(--app-border)" onclick="App.instalarApp()">
+                        <i class="material-icons-round">add_to_home_screen</i>
+                        Adicionar à Tela Inicial
+                    </button>
+                ` : ''}
             </div>
         `;
     },
@@ -853,3 +873,18 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('Erro ao registrar SW:', err));
     });
 }
+
+// Captura do evento de instalação PWA
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    App.deferredPrompt = e;
+    // Se estiver na tela de login, re-renderizar para mostrar o botão
+    if (App.currentRoute === 'login') {
+        UI.renderLogin();
+    }
+});
+
+window.addEventListener('appinstalled', () => {
+    App.deferredPrompt = null;
+    console.log('App instalado com sucesso!');
+});
