@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bimester Selection Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#7C3AED",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                    },
+                    fontFamily: {
+                        display: ["Quicksand", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bimester-card {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bimester-card:active {
+            transform: scale(0.95);
+        }
+        .sub-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .sub-menu.open {
+            max-height: 300px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-12 selection:bg-primary selection:text-white">
+<header class="sticky top-0 z-50 px-6 py-6 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md flex items-center justify-between">
+<div>
+<p class="text-sm font-semibold text-primary uppercase tracking-widest">Olá, Estudante! 👋</p>
+<h1 class="text-2xl font-bold dark:text-white">Meus Estudos</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-slate-800 shadow-lg border border-slate-100 dark:border-slate-700 active:scale-95 transition-transform" title="Chave de Acesso">
+<span class="material-icons-round text-primary">key</span>
+</button>
+</header>
+<main class="px-6 space-y-6">
+<div class="bg-gradient-to-br from-primary to-indigo-600 rounded-3xl p-6 text-white shadow-xl">
+<h2 class="text-lg font-bold mb-1">Cronograma 2026</h2>
+<p class="text-white/80 text-sm">Selecione o bimestre para ver suas avaliações e conteúdos de estudo.</p>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="space-y-2">
+<button class="bimester-card w-full flex items-center p-5 rounded-3xl bg-emerald-100 dark:bg-emerald-900/30 border-2 border-emerald-200 dark:border-emerald-800/50" onclick="toggleMenu('b1')">
+<div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white mr-4 shadow-lg shadow-emerald-500/20">
+<span class="text-xl font-bold">1º</span>
+</div>
+<div class="flex-1 text-left">
+<h3 class="font-bold text-emerald-900 dark:text-emerald-300 text-lg">1º Bimestre</h3>
+<p class="text-emerald-700/70 dark:text-emerald-400/70 text-sm">Fevereiro - Abril</p>
+</div>
+<span class="material-icons-round text-emerald-600 transition-transform" id="icon-b1">expand_more</span>
+</button>
+<div class="sub-menu px-2 space-y-2" id="b1">
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-emerald-500 mr-3">assignment</span>
+<span class="font-semibold">Avaliação 1</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-emerald-500 mr-3">assignment</span>
+<span class="font-semibold">Avaliação 2</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-emerald-500 mr-3">auto_awesome</span>
+<span class="font-semibold">Bimestral Final</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="space-y-2">
+<button class="bimester-card w-full flex items-center p-5 rounded-3xl bg-blue-100 dark:bg-blue-900/30 border-2 border-blue-200 dark:border-blue-800/50" onclick="toggleMenu('b2')">
+<div class="w-14 h-14 bg-blue-500 rounded-2xl flex items-center justify-center text-white mr-4 shadow-lg shadow-blue-500/20">
+<span class="text-xl font-bold">2º</span>
+</div>
+<div class="flex-1 text-left">
+<h3 class="font-bold text-blue-900 dark:text-blue-300 text-lg">2º Bimestre</h3>
+<p class="text-blue-700/70 dark:text-blue-400/70 text-sm">Maio - Junho</p>
+</div>
+<span class="material-icons-round text-blue-600 transition-transform" id="icon-b2">expand_more</span>
+</button>
+<div class="sub-menu px-2 space-y-2" id="b2">
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-blue-500 mr-3">assignment</span>
+<span class="font-semibold">Avaliação 1</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-blue-500 mr-3">assignment</span>
+<span class="font-semibold">Avaliação 2</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+<a class="flex items-center p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700" href="#">
+<span class="material-icons-round text-blue-500 mr-3">auto_awesome</span>
+<span class="font-semibold">Bimestral Final</span>
+<span class="material-icons-round ml-auto text-slate-400">chevron_right</span>
+</a>
+</div>
+</div>
+<div class="space-y-2">
+<button class="bimester-card w-full flex items-center p-5 rounded-3xl bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-200 dark:border-amber-800/50" onclick="toggleMenu('b3')">
+<div class="w-14 h-14 bg-amber-500 rounded-2xl flex items-center justify-center text-white mr-4 shadow-lg shadow-amber-500/20">
+<span class="text-xl font-bold">3º</span>
+</div>
+<div class="flex-1 text-left">
+<h3 class="font-bold text-amber-900 dark:text-amber-300 text-lg">3º Bimestre</h3>
+<p class="text-amber-700/70 dark:text-amber-400/70 text-sm">Agosto - Setembro</p>
+</div>
+<span class="material-icons-round text-amber-600 transition-transform" id="icon-b3">expand_more</span>
+</button>
+<div class="sub-menu px-2 space-y-2" id="b3">
+<div class="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-slate-500 text-sm">Conteúdo disponível em breve!</p>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<button class="bimester-card w-full flex items-center p-5 rounded-3xl bg-rose-100 dark:bg-rose-900/30 border-2 border-rose-200 dark:border-rose-800/50" onclick="toggleMenu('b4')">
+<div class="w-14 h-14 bg-rose-500 rounded-2xl flex items-center justify-center text-white mr-4 shadow-lg shadow-rose-500/20">
+<span class="text-xl font-bold">4º</span>
+</div>
+<div class="flex-1 text-left">
+<h3 class="font-bold text-rose-900 dark:text-rose-300 text-lg">4º Bimestre</h3>
+<p class="text-rose-700/70 dark:text-rose-400/70 text-sm">Outubro - Dezembro</p>
+</div>
+<span class="material-icons-round text-rose-600 transition-transform" id="icon-b4">expand_more</span>
+</button>
+<div class="sub-menu px-2 space-y-2" id="b4">
+<div class="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+<p class="text-slate-500 text-sm">Conteúdo disponível em breve!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-slate-100 dark:bg-slate-800/50 rounded-3xl p-5 flex items-start gap-4">
+<div class="bg-primary/10 p-2 rounded-xl">
+<span class="material-icons-round text-primary">info</span>
+</div>
+<div>
+<h4 class="font-bold text-sm mb-1">Dica de Estudo</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Organize seus materiais e links dentro de cada avaliação para não perder nada!</p>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-6 left-6 right-6 h-20 bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg border border-slate-200 dark:border-slate-700 rounded-[2rem] shadow-2xl flex items-center justify-around px-4 z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-icons-round">home</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Início</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round">calendar_today</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Datas</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round">group</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Amigos</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-icons-round">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Ajustes</span>
+</button>
+</nav>
+<script>
+        function toggleMenu(id) {
+            const menu = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            // Close other menus if needed (optional)
+            // document.querySelectorAll('.sub-menu').forEach(m => {
+            //     if(m.id !== id) m.classList.remove('open');
+            // });
+            const isOpen = menu.classList.contains('open');
+            if (isOpen) {
+                menu.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                menu.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
+
+</body></html>

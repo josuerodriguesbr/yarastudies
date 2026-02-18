@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Friends Access Key Generator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec80",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102219",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .glass-card {
+            background: rgba(19, 236, 128, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(19, 236, 128, 0.2);
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(19, 236, 128, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation / Status Bar Area -->
+<div class="flex items-center p-6 justify-between">
+<button class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight">Friends Access</h1>
+<div class="size-10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">security</span>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 px-6 flex flex-col items-center justify-center gap-8">
+<!-- Illustration Area -->
+<div class="w-full max-w-xs aspect-square relative group">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-colors"></div>
+<div class="relative w-full h-full rounded-xl overflow-hidden shadow-2xl border-4 border-primary/20">
+<div class="w-full h-full bg-cover bg-center" data-alt="Two happy children studying together with glowing tablets" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBk7qaZ3l2YxpKlfIaFdr7PG3XoFFsssS2oBVCi4K3ynklwWgww44plEjRqiIA6UVhhpCxF4k8tQFnijQ4CRZ9hMz5pYFOBgQt-vY9pQL2hX6HV65brmOEN12q7IO-kmJpZPJcpY16CSrmUNuS7w_IGtZ1jMxnlBdDTLwLqBm4S_ODGNzQxejz8bDhHvlVyC6Su9NjxsIApGgi8EAvpoK9uRu_Agl5kNK9dpHYw_6ZR6sr_Jn4nD-vH2L_yDnbbJKJfEnHLawInlVE")'>
+</div>
+</div>
+<!-- Floating Elements for "Playful" feel -->
+<div class="absolute -top-4 -right-4 bg-primary text-background-dark p-3 rounded-full shadow-lg">
+<span class="material-symbols-outlined font-bold">star</span>
+</div>
+</div>
+<!-- Text Explanation -->
+<div class="text-center space-y-2">
+<h2 class="text-2xl font-bold text-white">Your Secret Study Key</h2>
+<p class="text-primary/80 text-sm px-4 leading-relaxed">
+                Share this secret code with your best friends so they can study with you!
+            </p>
+</div>
+<!-- Key Display Area -->
+<div class="w-full glass-card p-8 rounded-xl flex flex-col items-center justify-center gap-4 relative overflow-hidden border-2 border-primary/30 neon-glow">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<p class="text-xs uppercase tracking-[0.3em] text-primary/60 font-medium">Active Access Code</p>
+<div class="text-3xl md:text-4xl font-black tracking-widest text-white selection:bg-primary selection:text-background-dark">
+                YARA-FRIENDS-2024
+            </div>
+<div class="flex items-center gap-2 text-primary/40 text-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Securely Generated
+            </div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full space-y-4">
+<button class="w-full bg-primary hover:bg-primary/90 text-background-dark font-bold py-5 rounded-full text-lg shadow-xl shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                Generate New Key
+            </button>
+<button class="w-full bg-white/5 hover:bg-white/10 text-white font-medium py-4 rounded-full border border-white/10 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">content_copy</span>
+                Copy Code to Share
+            </button>
+</div>
+<p class="text-[10px] text-primary/30 uppercase tracking-widest pb-8">
+            Only friends with this key can see your study notes
+        </p>
+</main>
+<!-- Bottom Navigation Bar (Based on provided component) -->
+<nav class="border-t border-primary/10 bg-background-dark/80 backdrop-blur-md px-4 pb-8 pt-4">
+<div class="flex gap-2 max-w-md mx-auto">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">book</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Materials</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-white bg-primary/20 rounded-xl py-2 transition-all" href="#">
+<span class="material-symbols-outlined fill-[1]">group</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Friends</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<p class="text-[10px] font-medium leading-normal tracking-wide">Profile</p>
+</a>
+</div>
+</nav>
+</body></html>
