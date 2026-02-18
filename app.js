@@ -269,7 +269,9 @@ const UI = {
                         <i class="material-icons-round text-primary" style="font-size: 3rem;">auto_stories</i>
                     </div>
                     <h1 class="text-3xl font-bold mb-2">Yara's Studies</h1>
-                    <p class="text-dim">Pronta para sua próxima aventura, Yara?</p>
+                    <p class="text-dim">Pronta para sua próxima aventura?</p>
+                    <br>
+                    <br>
                 </div>
 
                 <div class="w-full max-w-sm">
@@ -539,32 +541,37 @@ const UI = {
 
             html += `
                 <div class="card-material" onclick="UI.abrirMaterial('${m.id}', '${m.titulo}', '${m.tipo}', '${m.url}')">
-                    <div class="actions-left" onclick="event.stopPropagation(); App.toggleConclusao('${m.id}')">
-                        <div class="check-box ${App.progresso.includes(m.id.toString()) ? 'checked' : ''}">
-                            <i class="material-icons-round">done</i>
-                        </div>
-                    </div>
-
-                    <div class="type-icon" style="background: ${cor}20; color: ${cor}">
-                        <i class="material-icons-round text-3xl">${icon}</i>
-                    </div>
-
-                    <div class="material-info">
+                    <div class="material-top">
                         <h4>${m.titulo}</h4>
-                        <div class="meta">
-                            <span>${m.data}</span>
-                            <span style="opacity: 0.2">•</span>
-                            <span style="color: ${cor}">${m.tipo.toUpperCase()}</span>
-                        </div>
                     </div>
 
-                    <div class="actions">
-                        ${App.user.tipo === 'Admin' ? `
-                            <button class="btn-delete" onclick="event.stopPropagation(); UI.removerMaterial('${m.id}', '${nome}')">
-                                <i class="material-icons-round text-xl">delete_outline</i>
-                            </button>
-                        ` : ''}
-                        <i class="material-icons-round text-white/10 text-xl">chevron_right</i>
+                    <div class="material-footer">
+                        <div class="actions-left" onclick="event.stopPropagation(); App.toggleConclusao('${m.id}')">
+                            <div class="check-box ${App.progresso.includes(m.id.toString()) ? 'checked' : ''}">
+                                <i class="material-icons-round">done</i>
+                            </div>
+                        </div>
+
+                        <div class="type-icon" style="background: ${cor}20; color: ${cor}">
+                            <i class="material-icons-round text-2xl">${icon}</i>
+                        </div>
+
+                        <div class="material-info">
+                            <div class="meta">
+                                <span>${m.data}</span>
+                                <span style="opacity: 0.2">•</span>
+                                <span style="color: ${cor}">${m.tipo.toUpperCase()}</span>
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            ${App.user.tipo === 'Admin' ? `
+                                <button class="btn-delete" onclick="event.stopPropagation(); UI.removerMaterial('${m.id}', '${nome}')">
+                                    <i class="material-icons-round text-xl">delete_outline</i>
+                                </button>
+                            ` : ''}
+                            <i class="material-icons-round text-white/10 text-xl">chevron_right</i>
+                        </div>
                     </div>
                 </div>
             `;

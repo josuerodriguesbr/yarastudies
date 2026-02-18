@@ -725,16 +725,37 @@ body {
 /* Material Subject Cards */
 .card-material {
     display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.25rem;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
     background: var(--app-surface);
-    border-radius: 1.5rem;
+    border-radius: 2rem;
     border: 1px solid var(--app-border);
     transition: var(--transition);
     cursor: pointer;
     position: relative;
     overflow: hidden;
+}
+
+.material-top {
+    width: 100%;
+}
+
+.material-top h4 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.2;
+    /* Permite quebra de linha se o título for longo */
+}
+
+.material-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card-material:active {
@@ -780,9 +801,9 @@ body {
 }
 
 .card-material .type-icon {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 1.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -794,15 +815,6 @@ body {
     min-width: 0;
 }
 
-.card-material h4 {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--white);
-    margin-bottom: 0.25rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 .card-material .meta {
     display: flex;
