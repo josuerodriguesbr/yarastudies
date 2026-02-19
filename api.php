@@ -23,6 +23,12 @@ function obterAnoVigente() {
     return '2026';
 }
 
+function verificarAutorizacaoMaster() {
+    if (!isset($_SESSION['master_authorized']) || $_SESSION['master_authorized'] !== true) {
+        responder(false, null, 'Senha mestra necessária para esta ação.');
+    }
+}
+
 $acao = $_GET['acao'] ?? '';
 
 if ($acao === 'login') {
@@ -40,6 +46,7 @@ if ($acao === 'login') {
             $_SESSION['usuario_id'] = $user_data['id'];
             $_SESSION['tipo'] = $user_data['tipoUsuario'];
             $_SESSION['nome'] = $user_data['nome'];
+            $_SESSION['master_authorized'] = false; // Resetar ao logar
             responder(true, [
                 'id' => $user_data['id'],
                 'nome' => $user_data['nome'],
@@ -48,6 +55,19 @@ if ($acao === 'login') {
         }
     }
     responder(false, null, 'Usuário ou senha incorretos.');
+}
+
+if ($acao === 'validar_senha_mestra') {
+    $raw = file_get_contents('php://input');
+    $dados = json_decode($raw, true);
+    $senha = $dados['senha'] ?? '';
+    
+    // A senha agora fica protegida no servidor
+    if ($senha === 'SuperMaster') {
+        $_SESSION['master_authorized'] = true;
+        responder(true, null, 'Autorizado!');
+    }
+    responder(false, null, 'Senha incorreta.');
 }
 
 if ($acao === 'logout') {
@@ -81,6 +101,7 @@ if (!isset($_SESSION['usuario_id'])) {
 
 if ($acao === 'salvar_preferencias') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode configurar.');
+    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -200,6 +221,7 @@ if ($acao === 'listar_disciplinas') {
 // Ações de Disciplinas Mestre (Preferências)
 if ($acao === 'adicionar_disciplina_mestre') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode configurar.');
+    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -226,6 +248,7 @@ if ($acao === 'adicionar_disciplina_mestre') {
 
 if ($acao === 'remover_disciplina_mestre') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode configurar.');
+    verificarAutorizacaoMaster();
     
     $id = $_GET['id'];
     $ano = $_GET['ano'] ?? obterAnoVigente();
@@ -269,6 +292,7 @@ if ($acao === 'listar_amigos') {
 
 if ($acao === 'gerar_chave_amigo') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode gerar.');
+    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -296,6 +320,7 @@ if ($acao === 'gerar_chave_amigo') {
 
 if ($acao === 'remover_amigo') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode remover.');
+    verificarAutorizacaoMaster();
     
     $id = $_GET['id'];
     $file = $base_dir . "/usuarios/$id.json";
@@ -329,6 +354,7 @@ if ($acao === 'listar_materiais') {
 // Adicionar Material
 if ($acao === 'adicionar_material') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode adicionar.');
+    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -357,6 +383,7 @@ if ($acao === 'adicionar_material') {
 
 if ($acao === 'remover_material') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode remover.');
+    verificarAutorizacaoMaster();
     
     $id = $_GET['id'];
     $ano = $_GET['ano'] ?? obterAnoVigente();

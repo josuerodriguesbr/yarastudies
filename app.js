@@ -62,13 +62,19 @@ const App = {
         document.getElementById('input-master-pass').focus();
     },
 
-    validarESeguir() {
+    async validarESeguir() {
         const senha = document.getElementById('input-master-pass').value;
-        if (senha === 'SuperMaster') {
+        const resp = await fetch('api.php?acao=validar_senha_mestra', {
+            method: 'POST',
+            body: JSON.stringify({ senha })
+        });
+        const json = await resp.json();
+
+        if (json.sucesso) {
             document.getElementById('password-modal').remove();
             if (this.pendingCallback) this.pendingCallback();
         } else {
-            alert('❌ Senha incorreta!');
+            alert('❌ ' + json.mensagem);
             document.getElementById('input-master-pass').value = '';
             document.getElementById('input-master-pass').focus();
         }
