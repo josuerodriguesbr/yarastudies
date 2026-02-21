@@ -297,7 +297,8 @@ const UI = {
                 
                 <div class="mt-12 opacity-50 flex items-center gap-2">
                     <i class="material-icons-round">school</i>
-                    <span class="text-sm">Colégio Brasil • ${App.prefs ? App.prefs.ano_vigente : '...'}</span>
+                    <br>
+                    <span class="text-sm">jrsys • ${App.prefs ? App.prefs.ano_vigente : '...'}</span>
                 </div>
 
                 ${App.deferredPrompt ? `
@@ -618,18 +619,28 @@ const UI = {
     },
 
     async adicionarMaterial(titulo, tipo, url) {
-        await fetch('api.php?acao=adicionar_material', {
-            method: 'POST',
-            body: JSON.stringify({
-                disciplina_id: App.currentDisciplinaId,
-                bimestre: App.currentBimestre,
-                prova: App.currentProva,
-                titulo: titulo,
-                tipo: tipo,
-                url: url
-            })
-        });
-        this.renderMateriais({ disciplina_id: App.currentDisciplinaId, nome: document.querySelector('h1').innerText });
+        try {
+            const resp = await fetch('api.php?acao=adicionar_material', {
+                method: 'POST',
+                body: JSON.stringify({
+                    disciplina_id: App.currentDisciplinaId,
+                    bimestre: App.currentBimestre,
+                    prova: App.currentProva,
+                    titulo: titulo,
+                    tipo: tipo,
+                    url: url
+                })
+            });
+            const json = await resp.json();
+            if (json.sucesso) {
+                this.renderMateriais({ disciplina_id: App.currentDisciplinaId, nome: document.querySelector('h1').innerText });
+            } else {
+                alert('❌ Erro ao salvar: ' + json.mensagem);
+            }
+        } catch (e) {
+            console.error('Erro ao adicionar material:', e);
+            alert('❌ Falha na conexão com o servidor.');
+        }
     },
 
     abrirMaterial(id, titulo, tipo, url) {

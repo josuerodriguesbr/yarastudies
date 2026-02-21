@@ -354,7 +354,6 @@ if ($acao === 'listar_materiais') {
 // Adicionar Material
 if ($acao === 'adicionar_material') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode adicionar.');
-    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -377,7 +376,7 @@ if ($acao === 'adicionar_material') {
     ];
     $materiais[] = $novo_material;
     
-    file_put_contents($materiais_file, json_encode($materiais));
+    file_put_contents($materiais_file, json_encode($materiais, JSON_PRETTY_PRINT));
     responder(true, $novo_material);
 }
 
