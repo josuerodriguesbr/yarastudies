@@ -331,6 +331,44 @@ if ($acao === 'remover_amigo') {
     responder(true);
 }
 
+// Fazer Upload de Áudio
+if ($acao === 'fazer_upload_audio') {
+    if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode fazer upload.');
+
+    if (!isset($_FILES['audio'])) {
+        responder(false, null, 'Nenhum arquivo enviado.');
+    }
+
+    $arquivo = $_FILES['audio'];
+    $extensao = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
+
+    if ($extensao !== 'mp3') {
+        responder(false, null, 'Apenas arquivos MP3 são permitidos.');
+    }
+
+    $ano = $_POST['ano'] ?? obterAnoVigente();
+    $bimestre = $_POST['bimestre'] ?? 'B1';
+    $prova = $_POST['prova'] ?? 'P1';
+    $disciplina = $_POST['disciplina_id'] ?? 'D0';
+    
+    // Limpar nome para o arquivo
+    $bimestre_curto = strtoupper(str_replace('bimestre', 'B', $bimestre));
+    $prova_curto = strtoupper(str_replace(['avaliacao', 'bimestral'], ['A', 'BF'], $prova));
+
+    $nome_arquivo = "YARA_{$ano}_{$bimestre_curto}_{$prova_curto}_D{$disciplina}_" . time() . ".mp3";
+    $caminho_destino = __DIR__ . "/materiais/audios/" . $nome_arquivo;
+
+    if (!is_dir(__DIR__ . "/materiais/audios")) {
+        mkdir(__DIR__ . "/materiais/audios", 0777, true);
+    }
+
+    if (move_uploaded_file($arquivo['tmp_name'], $caminho_destino)) {
+        responder(true, ['url' => "materiais/audios/" . $nome_arquivo], 'Upload concluído com sucesso!');
+    } else {
+        responder(false, null, 'Erro ao mover o arquivo para a pasta de destino.');
+    }
+}
+
 // Listar Materiais
 if ($acao === 'listar_materiais') {
     $ano = $_GET['ano'] ?? obterAnoVigente();

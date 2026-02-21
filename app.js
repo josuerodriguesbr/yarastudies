@@ -606,15 +606,154 @@ const UI = {
     },
 
     showAdicionarMaterial() {
-        const titulo = prompt('Título do material:');
-        if (!titulo) return;
+        const modalHtml = `
+            <div id="modal-add" class="modal-overlay page-fade-in" style="z-index: 4000">
+                <div class="modal-add-material">
+                    <header class="flex items-center justify-between mb-2">
+                        <h3 class="m-0">Novo Conteúdo</h3>
+                        <button class="btn-close" onclick="document.getElementById('modal-add').remove()" style="position: static">
+                            <i class="material-icons-round">close</i>
+                        </button>
+                    </header>
+                    
+                    <div class="space-y-4">
+                        <div class="input-group">
+                            <label>Título do Material</label>
+                            <input type="text" id="add-titulo" class="input-field" placeholder="Ex: Resumo de Ciências...">
+                        </div>
 
-        const tipo = prompt('Tipo (link, youtube, pdf, audio, notebooklm):', 'link');
-        if (!tipo) return;
+                        <div class="input-group">
+                            <label>Tipo de Conteúdo</label>
+                            <select id="add-tipo" class="input-field" onchange="UI.toggleInputMaterial(this.value)">
+                                <option value="link">Link Externo (Web)</option>
+                                <option value="youtube">Vídeo do YouTube</option>
+                                <option value="pdf">Arquivo PDF</option>
+                                <option value="audio_file">Áudio Original (MP3)</option>
+                                <option value="audio">Link de Áudio (URL)</option>
+                                <option value="notebooklm">Google NotebookLM</option>
+                            </select>
+                        </div>
 
-        const url = prompt('URL ou Link:');
-        if (url) {
-            this.adicionarMaterial(titulo, tipo, url);
+                        <div id="wrapper-url" class="input-group">
+                            <label id="label-url">Caminho / URL / Link</label>
+                            <input type="text" id="add-url" class="input-field" placeholder="https://...">
+                        </div>
+
+                        <div id="wrapper-file" class="hidden">
+                            <label>Arquivo de Áudio (MP3)</label>
+                            <div class="file-upload-box" onclick="document.getElementById('add-file').click()">
+                                <i class="material-icons-round">cloud_upload</i>
+                                <span>Clique para selecionar o MP3</span>
+                                <input type="file" id="add-file" class="hidden" accept=".mp3" onchange="UI.previewFileAdd(this)">
+                            </div>
+                            <div id="file-preview" class="hidden file-preview-area">
+                                <i class="material-icons-round text-primary">audiotrack</i>
+                                <span id="file-name" class="file-name-preview">arquivo.mp3</span>
+                                <button class="btn-delete" onclick="UI.clearFileAdd()">
+                                    <i class="material-icons-round">close</i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary w-full justify-center mt-4" onclick="UI.validarESalvarMaterial()">
+                            <i class="material-icons-round">save</i>
+                            Salvar Material
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    },
+
+    toggleInputMaterial(tipo) {
+        const wUrl = document.getElementById('wrapper-url');
+        const wFile = document.getElementById('wrapper-file');
+
+        if (tipo === 'audio_file') {
+            wUrl.classList.add('hidden');
+            wFile.classList.remove('hidden');
+        } else {
+            wUrl.classList.remove('hidden');
+            wFile.classList.add('hidden');
+
+            const label = document.getElementById('label-url');
+            if (tipo === 'youtube') label.innerText = 'Link do Vídeo';
+            else if (tipo === 'pdf') label.innerText = 'URL do PDF';
+            else if (tipo === 'notebooklm') label.innerText = 'Link do Notebook';
+            else label.innerText = 'Link / URL';
+        }
+    },
+
+    previewFileAdd(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            document.getElementById('file-name').innerText = file.name;
+            document.getElementById('file-preview').classList.remove('hidden');
+            document.querySelector('.file-upload-box').classList.add('hidden');
+        }
+    },
+
+    clearFileAdd() {
+        document.getElementById('add-file').value = '';
+        document.getElementById('file-preview').classList.add('hidden');
+        document.querySelector('.file-upload-box').classList.remove('hidden');
+    },
+
+    async validarESalvarMaterial() {
+        const titulo = document.getElementById('add-titulo').value;
+        const tipo = document.getElementById('add-tipo').value;
+        const url = document.getElementById('add-url').value;
+        const file = document.getElementById('add-file').files[0];
+
+        if (!titulo) return alert('Por favor, informe o título.');
+
+        if (tipo === 'audio_file') {
+            if (!file) return alert('Por favor, selecione o arquivo MP3.');
+            await this.fazerUploadEAdicionar(titulo, file);
+        } else {
+            if (!url) return alert('Por favor, informe o link ou URL.');
+            await this.adicionarMaterial(titulo, tipo, url);
+        }
+    },
+
+    async fazerUploadEAdicionar(titulo, file) {
+        const btn = document.querySelector('#modal-add .btn-primary');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="material-icons-round animate-spin">sync</i> Enviando arquivo...';
+
+        try {
+            // Primeiro faz o upload do arquivo
+            const formData = new FormData();
+            formData.append('audio', file);
+            formData.append('ano', App.prefs.ano_vigente);
+            formData.append('bimestre', App.currentBimestre);
+            formData.append('prova', App.currentProva);
+            formData.append('disciplina_id', App.currentDisciplinaId);
+
+            const upResp = await fetch('api.php?acao=fazer_upload_audio', {
+                method: 'POST',
+                body: formData
+            });
+            const upJson = await upResp.json();
+
+            if (!upJson.sucesso) {
+                alert('❌ Erro no upload: ' + upJson.mensagem);
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                return;
+            }
+
+            // Depois salva o material com a URL retornada
+            await this.adicionarMaterial(titulo, 'audio', upJson.dados.url);
+            document.getElementById('modal-add').remove();
+
+        } catch (e) {
+            console.error('Erro no processo de upload:', e);
+            alert('❌ Falha crítica ao enviar áudio.');
+            btn.disabled = false;
+            btn.innerHTML = originalText;
         }
     },
 
@@ -633,6 +772,7 @@ const UI = {
             });
             const json = await resp.json();
             if (json.sucesso) {
+                if (document.getElementById('modal-add')) document.getElementById('modal-add').remove();
                 this.renderMateriais({ disciplina_id: App.currentDisciplinaId, nome: document.querySelector('h1').innerText });
             } else {
                 alert('❌ Erro ao salvar: ' + json.mensagem);

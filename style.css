@@ -619,6 +619,157 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    background: #EF4444;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+}
+
+.btn-delete:active {
+    transform: scale(0.9);
+}
+
+/* Utility Helpers */
+.w-full {
+    width: 100%;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.space-y-4>*+* {
+    margin-top: 1rem;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Modal Add Material */
+.modal-add-material {
+    background: var(--app-surface);
+    border-radius: 2.5rem;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    border: 1px solid var(--app-border);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modal-add-material h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.modal-add-material select.input-field {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5rem;
+    padding-right: 3rem;
+}
+
+.file-upload-box {
+    border: 2px dashed var(--app-border);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.file-upload-box:hover {
+    border-color: var(--primary);
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.file-upload-box i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.file-upload-box span {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+.file-preview-area {
+    margin-top: 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.file-name-preview {
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-weight: 700;
+    word-break: break-all;
+    flex: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-fixed:active {
+    transform: scale(0.9) translateY(5px);
+}
+
+/* Standardized Delete Button */
+.btn-delete {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #EF4444;
     background: rgba(239, 68, 68, 0.08);
     border: 1px solid rgba(239, 68, 68, 0.1);
