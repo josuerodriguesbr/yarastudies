@@ -342,8 +342,8 @@ if ($acao === 'fazer_upload_audio') {
     $arquivo = $_FILES['audio'];
     $extensao = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
 
-    if ($extensao !== 'mp3') {
-        responder(false, null, 'Apenas arquivos MP3 são permitidos.');
+    if (!in_array($extensao, ['mp3', 'm4a'])) {
+        responder(false, null, 'Apenas arquivos MP3 e M4A são permitidos.');
     }
 
     $ano = $_POST['ano'] ?? obterAnoVigente();

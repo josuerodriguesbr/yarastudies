@@ -628,7 +628,7 @@ const UI = {
                                 <option value="link">Link Externo (Web)</option>
                                 <option value="youtube">Vídeo do YouTube</option>
                                 <option value="pdf">Arquivo PDF</option>
-                                <option value="audio_file">Áudio Original (MP3)</option>
+                                <option value="audio_file">Áudio Original (MP3/M4A)</option>
                                 <option value="audio">Link de Áudio (URL)</option>
                                 <option value="notebooklm">Google NotebookLM</option>
                             </select>
@@ -640,11 +640,11 @@ const UI = {
                         </div>
 
                         <div id="wrapper-file" class="hidden">
-                            <label>Arquivo de Áudio (MP3)</label>
+                            <label>Arquivo de Áudio (MP3 ou M4A)</label>
                             <div class="file-upload-box" onclick="document.getElementById('add-file').click()">
                                 <i class="material-icons-round">cloud_upload</i>
-                                <span>Clique para selecionar o MP3</span>
-                                <input type="file" id="add-file" class="hidden" accept=".mp3" onchange="UI.previewFileAdd(this)">
+                                <span>Clique para selecionar o Áudio</span>
+                                <input type="file" id="add-file" class="hidden" accept=".mp3,.m4a" onchange="UI.previewFileAdd(this)">
                             </div>
                             <div id="file-preview" class="hidden file-preview-area">
                                 <i class="material-icons-round text-primary">audiotrack</i>
