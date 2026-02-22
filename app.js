@@ -709,7 +709,7 @@ const UI = {
         if (!titulo) return alert('Por favor, informe o título.');
 
         if (tipo === 'audio_file') {
-            if (!file) return alert('Por favor, selecione o arquivo MP3.');
+            if (!file) return alert('Por favor, selecione o arquivo MP3 ou M4A.');
             await this.fazerUploadEAdicionar(titulo, file);
         } else {
             if (!url) return alert('Por favor, informe o link ou URL.');
@@ -803,10 +803,10 @@ const UI = {
                         <i class="material-icons-round text-5xl">audiotrack</i>
                     </div>
                     <audio controls class="w-full">
-                        <source src="${url}" type="audio/mpeg">
+                        <source src="${url}">
                         Seu navegador não suporta áudio.
                     </audio>
-                    <p class="text-xs text-dim mt-4">Player de Áudio Nativo (MP3)</p>
+                    <p class="text-xs text-dim mt-4">Player de Áudio Nativo</p>
                 </div>
             `;
         } else if (tipo === 'notebooklm') {
@@ -974,11 +974,22 @@ const UI = {
     },
 
     async adicionarDisciplinaMestre(nome, cor, icone) {
-        await fetch('api.php?acao=adicionar_disciplina_mestre', {
-            method: 'POST',
-            body: JSON.stringify({ nome, cor, icone, ano: App.prefs.ano_vigente })
-        });
-        this.renderPreferencias();
+        try {
+            const resp = await fetch('api.php?acao=adicionar_disciplina_mestre', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, cor, icone, ano: App.prefs.ano_vigente })
+            });
+            const json = await resp.json();
+            if (json.sucesso) {
+                this.renderPreferencias();
+            } else {
+                alert('❌ Erro ao salvar: ' + json.mensagem);
+            }
+        } catch (e) {
+            console.error('Erro ao adicionar disciplina:', e);
+            alert('❌ Falha na conexão com o servidor.');
+        }
     },
 
     async removerDisciplinaMestre(id) {

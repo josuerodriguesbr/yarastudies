@@ -221,7 +221,6 @@ if ($acao === 'listar_disciplinas') {
 // Ações de Disciplinas Mestre (Preferências)
 if ($acao === 'adicionar_disciplina_mestre') {
     if ($_SESSION['tipo'] !== 'Admin') responder(false, null, 'Apenas Admin pode configurar.');
-    verificarAutorizacaoMaster();
     
     $raw = file_get_contents('php://input');
     $dados = json_decode($raw, true);
@@ -355,7 +354,7 @@ if ($acao === 'fazer_upload_audio') {
     $bimestre_curto = strtoupper(str_replace('bimestre', 'B', $bimestre));
     $prova_curto = strtoupper(str_replace(['avaliacao', 'bimestral'], ['A', 'BF'], $prova));
 
-    $nome_arquivo = "YARA_{$ano}_{$bimestre_curto}_{$prova_curto}_D{$disciplina}_" . time() . ".mp3";
+    $nome_arquivo = "YARA_{$ano}_{$bimestre_curto}_{$prova_curto}_D{$disciplina}_" . time() . "." . $extensao;
     $caminho_destino = __DIR__ . "/materiais/audios/" . $nome_arquivo;
 
     if (!is_dir(__DIR__ . "/materiais/audios")) {
